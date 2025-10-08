@@ -1,1 +1,124 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โปรแกรมบันทึกค่าใช้จ่าย</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 โปรแกรมบันทึกค่าใช้จ่าย</h1>
+            <p>จัดการการเงินของคุณอย่างมีประสิทธิภาพ</p>
+        </div>
 
+        <!-- Dashboard Stats -->
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div>ค่าใช้จ่ายทั้งหมด</div>
+                <div class="stat-value" id="totalExpense">฿0</div>
+            </div>
+            <div class="stat-card">
+                <div>จำนวนรายการ</div>
+                <div class="stat-value" id="totalCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div>ค่าเฉลี่ยต่อวัน</div>
+                <div class="stat-value" id="avgPerDay">฿0</div>
+            </div>
+        </div>
+
+        <!-- Add Expense Form -->
+        <div class="card">
+            <h2>➕ เพิ่มรายการค่าใช้จ่าย</h2>
+            <form id="expenseForm">
+                <div class="form-group">
+                    <label>รายการ</label>
+                    <input type="text" id="description" placeholder="เช่น ซื้อข้าวกล่อง" required>
+                </div>
+                <div class="form-group">
+                    <label>จำนวนเงิน (บาท)</label>
+                    <input type="number" id="amount" placeholder="0.00" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>หมวดหมู่</label>
+                    <select id="category" required>
+                        <option value="">เลือกหมวดหมู่</option>
+                        <option value="อาหาร">🍜 อาหาร</option>
+                        <option value="เดินทาง">🚗 เดินทาง</option>
+                        <option value="ช้อปปิ้ง">🛍️ ช้อปปิ้ง</option>
+                        <option value="ค่าบิล">📱 ค่าบิล</option>
+                        <option value="สุขภาพ">💊 สุขภาพ</option>
+                        <option value="บันเทิง">🎬 บันเทิง</option>
+                        <option value="การศึกษา">📚 การศึกษา</option>
+                        <option value="อื่นๆ">📦 อื่นๆ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>วันที่</label>
+                    <input type="date" id="date" required>
+                </div>
+                <button type="submit" class="btn">เพิ่มรายการ</button>
+            </form>
+        </div>
+
+        <!-- Filters -->
+        <div class="card">
+            <h2>🔍 กรอง/เรียงข้อมูล</h2>
+            <div class="filters">
+                <div class="form-group">
+                    <label>หมวดหมู่</label>
+                    <select id="filterCategory">
+                        <option value="">ทั้งหมด</option>
+                        <option value="อาหาร">🍜 อาหาร</option>
+                        <option value="เดินทาง">🚗 เดินทาง</option>
+                        <option value="ช้อปปิ้ง">🛍️ ช้อปปิ้ง</option>
+                        <option value="ค่าบิล">📱 ค่าบิล</option>
+                        <option value="สุขภาพ">💊 สุขภาพ</option>
+                        <option value="บันเทิง">🎬 บันเทิง</option>
+                        <option value="การศึกษา">📚 การศึกษา</option>
+                        <option value="อื่นๆ">📦 อื่นๆ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>ช่วงเวลา</label>
+                    <select id="filterPeriod">
+                        <option value="all">ทั้งหมด</option>
+                        <option value="today">วันนี้</option>
+                        <option value="week">สัปดาห์นี้</option>
+                        <option value="month">เดือนนี้</option>
+                        <option value="year">ปีนี้</option>
+                        <option value="custom">กำหนดเอง</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>จาก</label>
+                    <input type="date" id="filterFrom" disabled>
+                </div>
+                <div class="form-group">
+                    <label>ถึง</label>
+                    <input type="date" id="filterTo" disabled>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="card">
+            <h2>📈 กราฟค่าใช้จ่ายตามหมวดหมู่</h2>
+            <div class="chart-container">
+                <canvas id="categoryChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Expense List -->
+        <div class="card">
+            <h2>📝 รายการค่าใช้จ่าย</h2>
+            <div class="expense-list" id="expenseList"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
