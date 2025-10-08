@@ -32,8 +32,12 @@ document.getElementById('expenseForm').addEventListener('submit', function(e) {
     this.reset();
     document.getElementById('date').valueAsDate = new Date();
     
-    updateDashboard();
-    alert('✅ เพิ่มรายการเรียบร้อย!');
+    Swal.fire({
+        icon: 'success',
+        title: 'เพิ่มรายการสำเร็จ!',
+        showConfirmButton: false,
+        timer: 1500
+      });
 });
 
 // filter listeners
