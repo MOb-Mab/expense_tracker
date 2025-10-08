@@ -2,6 +2,14 @@
 let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
 let categoryChart = null;
 
+// เก็บค่า filter state
+let currentFilters = {
+    category: '',
+    period: 'all',
+    from: '',
+    to: ''
+};
+
 // set today's date as default
 document.getElementById('date').valueAsDate = new Date();
 
@@ -11,9 +19,13 @@ document.getElementById('expenseForm').addEventListener('submit', function(e) {
     
     const amount = parseFloat(document.getElementById('amount').value);
 
-    //จำนวนเงินต้องไม่เป็น0หรือค่าลบ
+    // จำนวนเงินต้องไม่เป็น0หรือค่าลบ
     if (amount <= 0) {
-        alert('❌ จำนวนเงินต้องมากกว่า 0 บาท');
+        Swal.fire({
+            icon: 'error',
+            title: 'ข้อมูลไม่ถูกต้อง',
+            text: 'จำนวนเงินต้องมากกว่า 0 บาท',
+        });
         document.getElementById('amount').focus();
         return; 
     }
@@ -21,7 +33,7 @@ document.getElementById('expenseForm').addEventListener('submit', function(e) {
     const expense = {
         id: Date.now(),
         description: document.getElementById('description').value,
-        amount: parseFloat(document.getElementById('amount').value),
+        amount: amount,
         category: document.getElementById('category').value,
         date: document.getElementById('date').value
     };
@@ -29,49 +41,84 @@ document.getElementById('expenseForm').addEventListener('submit', function(e) {
     expenses.push(expense);
     localStorage.setItem('expenses', JSON.stringify(expenses));
     
+    // อัพเดท Dashboard โดยไม่รีเซ็ต filter
+    updateDashboard();
+    
+    // รีเซ็ตฟอร์ม
     this.reset();
     document.getElementById('date').valueAsDate = new Date();
     
+    // แสดง Alert
     Swal.fire({
         icon: 'success',
         title: 'เพิ่มรายการสำเร็จ!',
         showConfirmButton: false,
         timer: 1500
-      });
+    });
 });
 
 // filter listeners
-document.getElementById('filterCategory').addEventListener('change', updateDashboard);
+document.getElementById('filterCategory').addEventListener('change', function() {
+    currentFilters.category = this.value;
+    updateDashboard();
+});
+
 document.getElementById('filterPeriod').addEventListener('change', function() {
+    currentFilters.period = this.value;
     const isCustom = this.value === 'custom';
     document.getElementById('filterFrom').disabled = !isCustom;
     document.getElementById('filterTo').disabled = !isCustom;
     updateDashboard();
 });
-document.getElementById('filterFrom').addEventListener('change', updateDashboard);
-document.getElementById('filterTo').addEventListener('change', updateDashboard);
+
+document.getElementById('filterFrom').addEventListener('change', function() {
+    currentFilters.from = this.value;
+    updateDashboard();
+});
+
+document.getElementById('filterTo').addEventListener('change', function() {
+    currentFilters.to = this.value;
+    updateDashboard();
+});
 
 // delete expense
 function deleteExpense(id) {
-    if (confirm('ต้องการลบรายการนี้ใช่หรือไม่?')) {
-        expenses = expenses.filter(e => e.id !== id);
-        localStorage.setItem('expenses', JSON.stringify(expenses));
-        updateDashboard();
-    }
+    Swal.fire({
+        title: 'ต้องการลบรายการนี้?',
+        text: "การลบจะไม่สามารถย้อนกลับได้",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'ใช่, ลบเลย!',
+        cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            expenses = expenses.filter(e => e.id !== id);
+            localStorage.setItem('expenses', JSON.stringify(expenses));
+            updateDashboard();
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'ลบสำเร็จ!',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    });
 }
 
-// get filtered expenses
+// get filtered expenses - ใช้ค่าจาก currentFilters แทน
 function getFilteredExpenses() {
     let filtered = [...expenses];
 
     // filter by category
-    const category = document.getElementById('filterCategory').value;
-    if (category) {
-        filtered = filtered.filter(e => e.category === category);
+    if (currentFilters.category) {
+        filtered = filtered.filter(e => e.category === currentFilters.category);
     }
 
     // filter by period
-    const period = document.getElementById('filterPeriod').value;
+    const period = currentFilters.period;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -94,10 +141,8 @@ function getFilteredExpenses() {
         yearAgo.setFullYear(yearAgo.getFullYear() - 1);
         filtered = filtered.filter(e => new Date(e.date) >= yearAgo);
     } else if (period === 'custom') {
-        const from = document.getElementById('filterFrom').value;
-        const to = document.getElementById('filterTo').value;
-        if (from) filtered = filtered.filter(e => e.date >= from);
-        if (to) filtered = filtered.filter(e => e.date <= to);
+        if (currentFilters.from) filtered = filtered.filter(e => e.date >= currentFilters.from);
+        if (currentFilters.to) filtered = filtered.filter(e => e.date <= currentFilters.to);
     }
 
     return filtered;
@@ -127,7 +172,12 @@ function updateDashboard() {
     // update expense list
     const listEl = document.getElementById('expenseList');
     if (filtered.length === 0) {
-        listEl.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">ไม่มีรายการค่าใช้จ่าย</p>';
+        listEl.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-receipt"></i>
+                <p>ไม่มีรายการค่าใช้จ่าย</p>
+            </div>
+        `;
     } else {
         listEl.innerHTML = filtered
             .sort((a, b) => new Date(b.date) - new Date(a.date))
