@@ -10,95 +10,95 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 โปรแกรมบันทึกค่าใช้จ่าย</h1>
-            <p>จัดการการเงินของคุณอย่างมีประสิทธิภาพ</p>
+            <h1><i class="fas fa-chart-pie"></i> Expense Tracker</h1>
+            <p>Manage your finances effectively</p>
         </div>
 
         <!-- dashboard stats -->
         <div class="stats" id="stats">
             <div class="stat-card">
-                <div>ค่าใช้จ่ายทั้งหมด</div>
-                <div class="stat-value" id="totalExpense">฿0</div>
+                <div>Total Expenses</div>
+                <div class="stat-value" id="totalExpense">$0</div>
             </div>
             <div class="stat-card">
-                <div>จำนวนรายการ</div>
+                <div>Number of Transactions</div>
                 <div class="stat-value" id="totalCount">0</div>
             </div>
             <div class="stat-card">
-                <div>ค่าเฉลี่ยต่อวัน</div>
-                <div class="stat-value" id="avgPerDay">฿0</div>
+                <div>Average Per Day</div>
+                <div class="stat-value" id="avgPerDay">$0</div>
             </div>
         </div>
 
         <!-- add expense form -->
         <div class="card">
-            <h2>➕ เพิ่มรายการค่าใช้จ่าย</h2>
+            <h2><i class="fas fa-plus-circle"></i> Add New Expense</h2>
             <form id="expenseForm">
                 <div class="form-group">
-                    <label>รายการ</label>
-                    <input type="text" id="description" placeholder="เช่น ซื้อข้าวกล่อง" required>
+                    <label>Description</label>
+                    <input type="text" id="description" placeholder="e.g., Lunch" required>
                 </div>
                 <div class="form-group">
-                    <label>จำนวนเงิน (บาท)</label>
+                    <label>Amount ($)</label>
                     <input type="number" id="amount" step="0.01" min="0.01" required>
                 </div>
                 <div class="form-group">
-                    <label>หมวดหมู่</label>
+                    <label>Category</label>
                     <select id="category" required>
-                        <option value="">เลือกหมวดหมู่</option>
-                        <option value="อาหาร">🍜 อาหาร</option>
-                        <option value="เดินทาง">🚗 เดินทาง</option>
-                        <option value="ช้อปปิ้ง">🛍️ ช้อปปิ้ง</option>
-                        <option value="ค่าบิล">📱 ค่าบิล</option>
-                        <option value="สุขภาพ">💊 สุขภาพ</option>
-                        <option value="บันเทิง">🎬 บันเทิง</option>
-                        <option value="การศึกษา">📚 การศึกษา</option>
-                        <option value="อื่นๆ">📦 อื่นๆ</option>
+                        <option value="">Select Category</option>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Health">Health</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Education">Education</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>วันที่</label>
+                    <label>Date</label>
                     <input type="date" id="date" required>
                 </div>
-                <button type="submit" class="btn">เพิ่มรายการ</button>
+                <button type="submit" class="btn"><i class="fas fa-save"></i> Add Expense</button>
             </form>
         </div>
 
         <!-- filters -->
         <div class="card">
-            <h2>🔍 กรอง/เรียงข้อมูล</h2>
+            <h2><i class="fas fa-filter"></i> Filter & Sort</h2>
             <div class="filters">
                 <div class="form-group">
-                    <label>หมวดหมู่</label>
+                    <label>Category</label>
                     <select id="filterCategory">
-                        <option value="">ทั้งหมด</option>
-                        <option value="อาหาร">🍜 อาหาร</option>
-                        <option value="เดินทาง">🚗 เดินทาง</option>
-                        <option value="ช้อปปิ้ง">🛍️ ช้อปปิ้ง</option>
-                        <option value="ค่าบิล">📱 ค่าบิล</option>
-                        <option value="สุขภาพ">💊 สุขภาพ</option>
-                        <option value="บันเทิง">🎬 บันเทิง</option>
-                        <option value="การศึกษา">📚 การศึกษา</option>
-                        <option value="อื่นๆ">📦 อื่นๆ</option>
+                        <option value="">All Categories</option>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Health">Health</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Education">Education</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>ช่วงเวลา</label>
+                    <label>Time Period</label>
                     <select id="filterPeriod">
-                        <option value="all">ทั้งหมด</option>
-                        <option value="today">วันนี้</option>
-                        <option value="week">สัปดาห์นี้</option>
-                        <option value="month">เดือนนี้</option>
-                        <option value="year">ปีนี้</option>
-                        <option value="custom">กำหนดเอง</option>
+                        <option value="all">All Time</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="year">This Year</option>
+                        <option value="custom">Custom Range</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>จาก</label>
+                    <label>From</label>
                     <input type="date" id="filterFrom" disabled>
                 </div>
                 <div class="form-group">
-                    <label>ถึง</label>
+                    <label>To</label>
                     <input type="date" id="filterTo" disabled>
                 </div>
             </div>
@@ -106,7 +106,7 @@
 
         <!-- charts -->
         <div class="card">
-            <h2>📈 กราฟค่าใช้จ่ายตามหมวดหมู่</h2>
+            <h2><i class="fas fa-chart-pie"></i> Expense by Category</h2>
             <div class="chart-container">
                 <canvas id="categoryChart"></canvas>
             </div>
@@ -114,11 +114,217 @@
 
         <!-- expense List -->
         <div class="card">
-            <h2>📝 รายการค่าใช้จ่าย</h2>
-            <div class="expense-list" id="expenseList"></div>
+            <h2><i class="fas fa-list"></i> Expense History</h2>
+            <div class="expense-list" id="expenseList">
+                <div class="empty-state">
+                    <i class="fas fa-receipt"></i>
+                    <p>No expenses recorded yet</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Initialize data
+        let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+        let categoryChart = null;
+
+        // Set today's date as default
+        document.getElementById('date').valueAsDate = new Date();
+
+        // Form submission
+        document.getElementById('expenseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const amount = parseFloat(document.getElementById('amount').value);
+
+            // Check if amount is negative or zero
+            if (amount <= 0) {
+                alert('❌ Amount must be greater than 0');
+                document.getElementById('amount').focus();
+                return; 
+            }
+
+            const expense = {
+                id: Date.now(),
+                description: document.getElementById('description').value,
+                amount: parseFloat(document.getElementById('amount').value),
+                category: document.getElementById('category').value,
+                date: document.getElementById('date').value
+            };
+
+            expenses.push(expense);
+            localStorage.setItem('expenses', JSON.stringify(expenses));
+            
+            this.reset();
+            document.getElementById('date').valueAsDate = new Date();
+            
+            updateDashboard();
+            alert('✅ Expense added successfully!');
+        });
+
+        // Filter listeners
+        document.getElementById('filterCategory').addEventListener('change', updateDashboard);
+        document.getElementById('filterPeriod').addEventListener('change', function() {
+            const isCustom = this.value === 'custom';
+            document.getElementById('filterFrom').disabled = !isCustom;
+            document.getElementById('filterTo').disabled = !isCustom;
+            updateDashboard();
+        });
+        document.getElementById('filterFrom').addEventListener('change', updateDashboard);
+        document.getElementById('filterTo').addEventListener('change', updateDashboard);
+
+        // Delete expense
+        function deleteExpense(id) {
+            if (confirm('Are you sure you want to delete this expense?')) {
+                expenses = expenses.filter(e => e.id !== id);
+                localStorage.setItem('expenses', JSON.stringify(expenses));
+                updateDashboard();
+            }
+        }
+
+        // Get filtered expenses
+        function getFilteredExpenses() {
+            let filtered = [...expenses];
+
+            // Filter by category
+            const category = document.getElementById('filterCategory').value;
+            if (category) {
+                filtered = filtered.filter(e => e.category === category);
+            }
+
+            // Filter by period
+            const period = document.getElementById('filterPeriod').value;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (period === 'today') {
+                filtered = filtered.filter(e => {
+                    const expenseDate = new Date(e.date);
+                    expenseDate.setHours(0, 0, 0, 0);
+                    return expenseDate.getTime() === today.getTime();
+                });
+            } else if (period === 'week') {
+                const weekAgo = new Date(today);
+                weekAgo.setDate(weekAgo.getDate() - 7);
+                filtered = filtered.filter(e => new Date(e.date) >= weekAgo);
+            } else if (period === 'month') {
+                const monthAgo = new Date(today);
+                monthAgo.setMonth(monthAgo.getMonth() - 1);
+                filtered = filtered.filter(e => new Date(e.date) >= monthAgo);
+            } else if (period === 'year') {
+                const yearAgo = new Date(today);
+                yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+                filtered = filtered.filter(e => new Date(e.date) >= yearAgo);
+            } else if (period === 'custom') {
+                const from = document.getElementById('filterFrom').value;
+                const to = document.getElementById('filterTo').value;
+                if (from) filtered = filtered.filter(e => e.date >= from);
+                if (to) filtered = filtered.filter(e => e.date <= to);
+            }
+
+            return filtered;
+        }
+
+        // Update dashboard
+        function updateDashboard() {
+            const filtered = getFilteredExpenses();
+            
+            // Update stats
+            const total = filtered.reduce((sum, e) => sum + e.amount, 0);
+            document.getElementById('totalExpense').textContent = `$${total.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            document.getElementById('totalCount').textContent = filtered.length;
+
+            // Calculate average per day
+            if (filtered.length > 0) {
+                const dates = filtered.map(e => new Date(e.date).getTime());
+                const minDate = Math.min(...dates);
+                const maxDate = Math.max(...dates);
+                const days = Math.max(1, Math.ceil((maxDate - minDate) / (1000 * 60 * 60 * 24)) + 1);
+                const avg = total / days;
+                document.getElementById('avgPerDay').textContent = `$${avg.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            } else {
+                document.getElementById('avgPerDay').textContent = '$0';
+            }
+
+            // Update expense list
+            const listEl = document.getElementById('expenseList');
+            if (filtered.length === 0) {
+                listEl.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-receipt"></i>
+                        <p>No expenses found</p>
+                    </div>
+                `;
+            } else {
+                listEl.innerHTML = filtered
+                    .sort((a, b) => new Date(b.date) - new Date(a.date))
+                    .map(e => `
+                        <div class="expense-item">
+                            <div class="expense-info">
+                                <span class="expense-category">${e.category}</span>
+                                <strong>${e.description}</strong>
+                                <div class="expense-date">${new Date(e.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</div>
+                            </div>
+                            <div class="expense-amount">$${e.amount.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                            <button class="btn btn-delete" onclick="deleteExpense(${e.id})"><i class="fas fa-trash"></i> Delete</button>
+                        </div>
+                    `).join('');
+            }
+
+            // Update chart
+            updateChart(filtered);
+        }
+
+        // Update chart
+        function updateChart(filtered) {
+            const categoryTotals = {};
+            filtered.forEach(e => {
+                categoryTotals[e.category] = (categoryTotals[e.category] || 0) + e.amount;
+            });
+
+            const labels = Object.keys(categoryTotals);
+            const data = Object.values(categoryTotals);
+            const colors = [
+                '#4a6cf7', '#6c757d', '#28a745', '#dc3545', 
+                '#ffc107', '#17a2b8', '#6610f2', '#e83e8c'
+            ];
+
+            if (categoryChart) {
+                categoryChart.destroy();
+            }
+
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            categoryChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': $' + context.parsed.toLocaleString('en-US', {minimumFractionDigits: 2});
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initial load
+        updateDashboard();
+    </script>
 </body>
 </html>
