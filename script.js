@@ -1,14 +1,23 @@
-// Initialize data
+// initialize data
 let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
 let categoryChart = null;
 
-// Set today's date as default
+// set today's date as default
 document.getElementById('date').valueAsDate = new Date();
 
-// Form submission
+// form submission
 document.getElementById('expenseForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
+    const amount = parseFloat(document.getElementById('amount').value);
+
+    //จำนวนเงินต้องไม่เป็น0หรือค่าลบ
+    if (amount <= 0) {
+        alert('❌ จำนวนเงินต้องมากกว่า 0 บาท');
+        document.getElementById('amount').focus();
+        return; 
+    }
+
     const expense = {
         id: Date.now(),
         description: document.getElementById('description').value,
@@ -27,7 +36,7 @@ document.getElementById('expenseForm').addEventListener('submit', function(e) {
     alert('✅ เพิ่มรายการเรียบร้อย!');
 });
 
-// Filter listeners
+// filter listeners
 document.getElementById('filterCategory').addEventListener('change', updateDashboard);
 document.getElementById('filterPeriod').addEventListener('change', function() {
     const isCustom = this.value === 'custom';
@@ -38,7 +47,7 @@ document.getElementById('filterPeriod').addEventListener('change', function() {
 document.getElementById('filterFrom').addEventListener('change', updateDashboard);
 document.getElementById('filterTo').addEventListener('change', updateDashboard);
 
-// Delete expense
+// delete expense
 function deleteExpense(id) {
     if (confirm('ต้องการลบรายการนี้ใช่หรือไม่?')) {
         expenses = expenses.filter(e => e.id !== id);
@@ -47,17 +56,17 @@ function deleteExpense(id) {
     }
 }
 
-// Get filtered expenses
+// get filtered expenses
 function getFilteredExpenses() {
     let filtered = [...expenses];
 
-    // Filter by category
+    // filter by category
     const category = document.getElementById('filterCategory').value;
     if (category) {
         filtered = filtered.filter(e => e.category === category);
     }
 
-    // Filter by period
+    // filter by period
     const period = document.getElementById('filterPeriod').value;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -90,16 +99,16 @@ function getFilteredExpenses() {
     return filtered;
 }
 
-// Update dashboard
+// update dashboard
 function updateDashboard() {
     const filtered = getFilteredExpenses();
     
-    // Update stats
+    // update stats
     const total = filtered.reduce((sum, e) => sum + e.amount, 0);
     document.getElementById('totalExpense').textContent = `฿${total.toLocaleString('th-TH', {minimumFractionDigits: 2})}`;
     document.getElementById('totalCount').textContent = filtered.length;
 
-    // Calculate average per day
+    // calculate average per day
     if (filtered.length > 0) {
         const dates = filtered.map(e => new Date(e.date).getTime());
         const minDate = Math.min(...dates);
@@ -111,7 +120,7 @@ function updateDashboard() {
         document.getElementById('avgPerDay').textContent = '฿0';
     }
 
-    // Update expense list
+    // update expense list
     const listEl = document.getElementById('expenseList');
     if (filtered.length === 0) {
         listEl.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">ไม่มีรายการค่าใช้จ่าย</p>';
@@ -131,11 +140,11 @@ function updateDashboard() {
             `).join('');
     }
 
-    // Update chart
+    // update chart
     updateChart(filtered);
 }
 
-// Update chart
+// update chart
 function updateChart(filtered) {
     const categoryTotals = {};
     filtered.forEach(e => {
@@ -182,5 +191,5 @@ function updateChart(filtered) {
     });
 }
 
-// Initial load
+// initial load
 updateDashboard();
