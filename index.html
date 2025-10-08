@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker</title>
     <link rel="stylesheet" href="style.css">
-    <!-- เพิ่ม Font Awesome -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- เพิ่ม Chart.js -->
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -22,7 +23,7 @@
         <div class="stats" id="stats">
             <div class="stat-card">
                 <div>Total Expenses</div>
-                <div class="stat-value" id="totalExpense">$0</div>
+                <div class="stat-value" id="totalExpense">฿0</div>
             </div>
             <div class="stat-card">
                 <div>Number of Transactions</div>
@@ -30,7 +31,7 @@
             </div>
             <div class="stat-card">
                 <div>Average Per Day</div>
-                <div class="stat-value" id="avgPerDay">$0</div>
+                <div class="stat-value" id="avgPerDay">฿0</div>
             </div>
         </div>
 
@@ -43,22 +44,27 @@
                     <input type="text" id="description" placeholder="e.g., Lunch" required>
                 </div>
                 <div class="form-group">
-                    <label>Amount ($)</label>
+                    <label>Amount (฿)</label>
                     <input type="number" id="amount" placeholder="0.00" step="0.01" min="0.01" required>
                 </div>
                 <div class="form-group">
                     <label>Category</label>
-                    <select id="category" required>
-                        <option value="">Select Category</option>
-                        <option value="Food">Food</option>
-                        <option value="Transport">Transport</option>
-                        <option value="Shopping">Shopping</option>
-                        <option value="Bills">Bills</option>
-                        <option value="Health">Health</option>
-                        <option value="Entertainment">Entertainment</option>
-                        <option value="Education">Education</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    <div style="display: flex; gap: 10px;">
+                        <select id="category" required style="flex: 1;">
+                            <option value="">Select Category</option>
+                            <option value="Food">Food</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Bills">Bills</option>
+                            <option value="Health">Health</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Education">Education</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary" onclick="openAddCategoryModal()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Date</label>
@@ -66,6 +72,14 @@
                 </div>
                 <button type="submit" class="btn"><i class="fas fa-save"></i> Add Expense</button>
             </form>
+        </div>
+
+        <!-- custom category section -->
+        <div class="card">
+            <h2><i class="fas fa-tags"></i> Manage Categories</h2>
+            <div class="custom-categories" id="customCategoriesList">
+                <!-- Custom categories will be listed here -->
+            </div>
         </div>
 
         <!-- filters -->
@@ -118,12 +132,56 @@
 
         <!-- expense List -->
         <div class="card">
-            <h2><i class="fas fa-list"></i> Expense History</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="margin: 0;"><i class="fas fa-list"></i> Expense History</h2>
+                <button class="btn btn-delete-all" id="deleteAllBtn" style="display: none;">
+                    <i class="fas fa-trash"></i> Delete All
+                </button>
+            </div>
             <div class="expense-list" id="expenseList">
                 <div class="empty-state">
                     <i class="fas fa-receipt"></i>
                     <p>No expenses recorded yet</p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div id="addCategoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Category</h3>
+                <button class="btn-close" onclick="closeAddCategoryModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Category Name</label>
+                    <input type="text" id="newCategoryName" placeholder="Enter category name">
+                </div>
+                <div class="form-group">
+                    <label>Category Color</label>
+                    <div class="color-picker">
+                        <div class="color-options">
+                            <div class="color-option selected" data-color="#ff6384" style="background-color: #ff6384;"></div>
+                            <div class="color-option" data-color="#36a2eb" style="background-color: #36a2eb;"></div>
+                            <div class="color-option" data-color="#ffce56" style="background-color: #ffce56;"></div>
+                            <div class="color-option" data-color="#4bc0c0" style="background-color: #4bc0c0;"></div>
+                            <div class="color-option" data-color="#9966ff" style="background-color: #9966ff;"></div>
+                            <div class="color-option" data-color="#ff9f40" style="background-color: #ff9f40;"></div>
+                            <div class="color-option" data-color="#ff6384" style="background-color: #ff6384;"></div>
+                            <div class="color-option" data-color="#c9cbcf" style="background-color: #c9cbcf;"></div>
+                        </div>
+                        <div class="custom-color">
+                            <input type="color" id="customColor" value="#4a6cf7">
+                            <label for="customColor">Custom Color</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeAddCategoryModal()">Cancel</button>
+                <button type="button" class="btn" onclick="addCustomCategory()">Add Category</button>
             </div>
         </div>
     </div>
