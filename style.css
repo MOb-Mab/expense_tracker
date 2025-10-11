@@ -516,8 +516,11 @@ input:focus, select:focus {
     
     /* Stats - single column for better alignment */
     .stats {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
         padding: 0;
         margin: 0;
+        gap: 12px;
     }
     
     .stat-card {
