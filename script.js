@@ -257,8 +257,14 @@ document.getElementById('expenseForm').addEventListener('submit', function(e) {
 document.getElementById('filterCategory').addEventListener('change', updateDashboard);
 document.getElementById('filterPeriod').addEventListener('change', function() {
     const isCustom = this.value === 'custom';
-    document.getElementById('filterFrom').disabled = !isCustom;
-    document.getElementById('filterTo').disabled = !isCustom;
+    const customDateRange = document.getElementById('customDateRange');
+    
+    if (isCustom) {
+        customDateRange.style.display = 'block';
+    } else {
+        customDateRange.style.display = 'none';
+    }
+    
     updateDashboard();
 });
 document.getElementById('filterFrom').addEventListener('change', updateDashboard);
