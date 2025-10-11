@@ -202,6 +202,15 @@ input:focus, select:focus {
     gap: 16px;
 }
 
+.custom-date-range {
+    display: none;
+}
+
+.custom-date-range.show {
+    display: grid !important;
+}
+
+
 .expense-header {
     display: flex;
     justify-content: space-between;

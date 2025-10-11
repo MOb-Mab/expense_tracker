@@ -260,9 +260,9 @@ document.getElementById('filterPeriod').addEventListener('change', function() {
     const customDateRange = document.getElementById('customDateRange');
     
     if (isCustom) {
-        customDateRange.classList.remove('hidden');
+        customDateRange. classList.add('show');
     } else {
-        customDateRange.classList.add('hidden');
+        customDateRange.style.display = 'none';
     }
     
     updateDashboard();
