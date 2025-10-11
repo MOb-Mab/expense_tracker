@@ -48,7 +48,6 @@ body {
     font-size: 1.1rem;
 }
 
-/* Main Grid Layout */
 .main-grid {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
@@ -179,7 +178,6 @@ input:focus, select:focus {
     color: var(--primary);
 }
 
-/* Category Selector */
 .category-selector {
     display: flex;
     gap: 10px;
@@ -189,7 +187,6 @@ input:focus, select:focus {
     flex: 1;
 }
 
-/* Filters */
 .filters {
     display: flex;
     flex-direction: column;
@@ -202,6 +199,7 @@ input:focus, select:focus {
     gap: 16px;
 }
 
+/* FIX: Custom date range visibility */
 .custom-date-range {
     display: none;
 }
@@ -209,7 +207,6 @@ input:focus, select:focus {
 .custom-date-range.show {
     display: grid !important;
 }
-
 
 .expense-header {
     display: flex;
@@ -289,7 +286,6 @@ input:focus, select:focus {
     color: #dee2e6;
 }
 
-/* Modal Styles */
 .modal {
     display: none;
     position: fixed;
@@ -359,7 +355,6 @@ input:focus, select:focus {
     border-top: 1px solid var(--border);
 }
 
-/* Color Picker Styles */
 .color-picker {
     margin-top: 10px;
 }
@@ -409,7 +404,6 @@ input:focus, select:focus {
     color: var(--secondary);
 }
 
-/* Custom Categories Styles */
 .custom-categories-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -468,60 +462,245 @@ input:focus, select:focus {
 }
 
 @media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
     .container {
-        padding: 0 10px;
+        padding: 0;
+        width: 100%;
+    }
+    
+    .header {
+        margin-bottom: 20px;
     }
     
     .header h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
     
+    .header p {
+        font-size: 0.95rem;
+    }
+    
+    /* Card adjustments */
+    .card {
+        padding: 16px;
+    }
+    
+    .card h2 {
+        font-size: 1.2rem;
+        margin-bottom: 16px;
+    }
+    
+    /* Stats - single column for better alignment */
     .stats {
         grid-template-columns: 1fr;
+        gap: 12px;
     }
     
+    .stat-card {
+        padding: 16px;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .stat-card div:first-child {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem;
+    }
+    
+    /* Form adjustments */
+    .form-group {
+        margin-bottom: 14px;
+    }
+    
+    label {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+    
+    input, select {
+        padding: 10px 12px;
+        font-size: 0.95rem;
+    }
+    
+    .btn {
+        padding: 11px 20px;
+        font-size: 0.95rem;
+        width: 100%;
+    }
+    
+    /* Category selector - full width button */
+    .category-selector {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .category-selector select {
+        flex: none;
+        width: 100%;
+    }
+    
+    .category-selector .btn-secondary {
+        width: 100%;
+    }
+    
+    /* Filters - single column */
     .filter-row {
         grid-template-columns: 1fr;
+        gap: 12px;
     }
     
+    /* Expense items - better mobile layout */
     .expense-item {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+        align-items: stretch;
+        gap: 10px;
+        padding: 12px;
+    }
+    
+    .expense-info {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    
+    .expense-info strong {
+        font-size: 1rem;
+    }
+    
+    .expense-category {
+        align-self: flex-start;
+        margin-right: 0;
+        margin-bottom: 4px;
+    }
+    
+    .expense-date {
+        font-size: 0.85rem;
     }
     
     .expense-amount {
         margin-right: 0;
+        font-size: 1.4rem;
+        text-align: left;
+        margin-bottom: 8px;
     }
     
+    .expense-item .btn-delete {
+        width: 100%;
+        margin-top: 4px;
+    }
+    
+    /* Header with delete all button */
+    .expense-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    
+    .expense-header h2 {
+        margin-bottom: 0;
+    }
+    
+    .btn-delete-all {
+        width: 100%;
+    }
+    
+    /* Chart adjustments */
+    .chart-container {
+        height: 250px;
+    }
+    
+    /* Custom categories */
     .custom-categories-grid {
         grid-template-columns: 1fr;
+        gap: 10px;
     }
     
     .custom-category-item {
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        gap: 10px;
     }
     
     .category-info {
-        justify-content: center;
+        justify-content: flex-start;
+        flex: 1;
     }
     
+    .category-tag {
+        font-size: 0.85rem;
+    }
+    
+    /* Modal adjustments */
     .modal-content {
         width: 95%;
-        margin: 20px;
+        max-width: none;
+        margin: 10px;
     }
     
-    .color-options {
-        grid-template-columns: repeat(4, 1fr);
+    .modal-header {
+        padding: 16px;
+    }
+    
+    .modal-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .modal-body {
+        padding: 16px;
     }
     
     .modal-footer {
         flex-direction: column;
+        padding: 16px;
+        gap: 8px;
     }
     
     .modal-footer .btn {
         width: 100%;
+    }
+    
+    /* Color picker adjustments */
+    .color-options {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+    
+    .color-option {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .custom-color {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+    
+    .custom-color input[type="color"] {
+        width: 45px;
+        height: 45px;
+    }
+    
+    /* Empty state */
+    .empty-state {
+        padding: 30px 15px;
+    }
+    
+    .empty-state i {
+        font-size: 2.5rem;
+    }
+    
+    .empty-state p {
+        font-size: 0.95rem;
     }
 }
