@@ -453,7 +453,9 @@ input:focus, select:focus {
 
 @media (max-width: 1024px) {
     .main-grid {
-        grid-template-columns: 1fr; 
+        padding: 0;
+        margin: 0;
+        gap: 15px;
     }
     
     
@@ -468,12 +470,16 @@ input:focus, select:focus {
     }
     
     .container {
-        margin: 0 auto;  
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
     }
     
     
     .header {
         text-align: center;
+        margin-bottom: 20px;
+        padding: 0 5px;
     }
     
     .header h1 {
@@ -486,10 +492,18 @@ input:focus, select:focus {
 
     
     .card {
-        width: 100%;  
-        margin: 0;    
+        margin: 0;
+        padding: 16px;
+        box-sizing: border-box;
+        width: 100%;
     }
     
+    .left-column,
+    .right-column {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
     .card h2 {
         font-size: 1.2rem;
         margin-bottom: 16px;
@@ -497,16 +511,13 @@ input:focus, select:focus {
     
     /* Stats - single column for better alignment */
     .stats {
-        grid-template-columns: 1fr;
-        gap: 12px;
+        padding: 0;
+        margin: 0;
     }
     
     .stat-card {
-        padding: 16px;
-        text-align: left;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        box-sizing: border-box;
+        margin: 0;
     }
     
     .stat-card div:first-child {
